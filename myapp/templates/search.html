@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+        <div>
+        <h1>Employee search deatil</h1>
+        <table class="table mb-0" border="1">
+            <thead style="background-color: yellow">
+                <tr>
+                   <th>Name</th>
+                    <th>Pan Number</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Email</th>
+                    <th>City</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if object_list %}
+                {% for user in object_list %}
+
+                <tr>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.pan_number }}</td>
+                    <td>{{ user.age }}</td>
+                    <td>{{ user.gender }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.city }}</td>
+                    <td>
+                        <a href="{% url 'employee_update' user.id %}" type="submit" class="btn btn-primary">Edit</a>
+                        <a href="{% url 'employee_delete' user.id %}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                No query match....
+                {% endif %}
+
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,100 @@
+{% load static %} {% load crispy_forms_tags %}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+<body>
+<div class=" container">
+    {% for message in messages %}
+        <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span> </button>
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6 col-lg-6 col-sm-6">
+                    {{ form.name | as_crispy_field }}
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    {{ form.pan_number | as_crispy_field }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    {{ form.age | as_crispy_field }}
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    {{ form.gender | as_crispy_field }}
+                </div>
+            </div>
+
+                {{ form.email | as_crispy_field }}
+
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    {{ form.city | as_crispy_field }}
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6" style="text-align: right">
+
+            <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+            </div>
+
+        </form>
+    </div>
+    <div  style="text-align: right">
+        <form  method="get" action="{% url 'search' %}" >
+
+            <input type="search" name="search"  placeholder="search"/>
+            <button type="submit" name="submit">Search</button>
+        </form>
+    </div>
+    <div>
+        <h1>Employee deatil</h1>
+        <table class="table mb-0" border="1">
+            <thead style="background-color: yellow">
+                <tr>
+                   <th>Name</th>
+                    <th>Pan Number</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Email</th>
+                    <th>City</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+
+                <tr>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.pan_number }}</td>
+                    <td>{{ user.age }}</td>
+                    <td>{{ user.gender }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.city }}</td>
+                    <td>
+                        <a href="{% url 'employee_update' user.id %}" type="submit" class="btn btn-primary">Edit</a>
+                        <a href="{% url 'employee_delete' user.id %}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+
+</body>
+</html>
